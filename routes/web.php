@@ -1,10 +1,18 @@
 <?php
 
+use App\Events\PostCreatedEvent;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
+use App\Notifications\PostCreatedNotification;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/post-created', function () {
+    $user = User::first();
+    $user->notify(new PostCreatedNotification());
 });
 
 Route::get('/dashboard', function () {
